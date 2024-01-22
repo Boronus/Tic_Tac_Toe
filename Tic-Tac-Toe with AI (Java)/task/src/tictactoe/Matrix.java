@@ -1,10 +1,7 @@
 package tictactoe;
 
-import java.util.Random;
-import java.util.Scanner;
-
 public class Matrix {
-    char[][] matrix = {
+    public char[][] table = {
             {' ', ' ', ' '},
             {' ', ' ', ' '},
             {' ', ' ', ' '},
@@ -17,7 +14,7 @@ public class Matrix {
             System.out.print("| ");
 
             for(int j=0; j<3; j++) {
-                System.out.print(matrix[i][j] + " ");
+                System.out.print(table[i][j] + " ");
             }
 
             System.out.println("|");
@@ -26,25 +23,10 @@ public class Matrix {
         System.out.println("---------");
     }
 
-    public void fillMatrix() {
-        Scanner scanner = new Scanner(System.in);
-        System.out.print("Enter the cells: > ");
-        String initialStateString = scanner.next();
-
-        int symbolIndex = 0;
-
-        for(int i=0; i<3; i++) {
-            for(int j=0; j<3; j++) {
-                matrix[i][j] = initialStateString.charAt(symbolIndex);
-                symbolIndex++;
-            }
-        }
-    }
-
-    public boolean setToEmpty(int[][] positions, char figure) {
-        for (int i = 0; i < positions.length; i++) {
-            if (matrix[positions[i][0]][positions[i][1]] == ' ') {
-                matrix[positions[i][0]][positions[i][1]] = figure;
+    public boolean setFigure(int[][] positions, char figure) {
+        for (int[] position : positions) {
+            if (table[position[0]][position[1]] == ' ') {
+                table[position[0]][position[1]] = figure;
                 return true;
             }
         }
@@ -57,7 +39,7 @@ public class Matrix {
 
         for(int i=0; i<3; i++) {
             for(int j=0; j<3; j++) {
-                if (matrix[i][j] == 'X') {
+                if (table[i][j] == 'X') {
                     numberOfX++;
                 }
             }
@@ -71,7 +53,7 @@ public class Matrix {
 
         for(int i=0; i<3; i++) {
             for(int j=0; j<3; j++) {
-                if (matrix[i][j] == 'O') {
+                if (table[i][j] == 'O') {
                     numberOfO++;
                 }
             }

@@ -3,8 +3,6 @@ package tictactoe;
 import java.util.Random;
 
 public class Easy extends Player {
-    public final PlayerType type = PlayerType.EASY;
-
     @Override
     public void play(Matrix matrix) {
         System.out.println("Making move level \"easy\"");
@@ -15,8 +13,8 @@ public class Easy extends Player {
             int randomX = random.nextInt(3);
             int randomY = random.nextInt(3);
 
-            if (matrix.matrix[randomX][randomY] == ' ') {
-                matrix.matrix[randomX][randomY] = Player.getFigure(matrix);
+            if (matrix.table[randomX][randomY] == ' ') {
+                matrix.table[randomX][randomY] = Player.getFigure(matrix);
                 success = true;
             }
         }

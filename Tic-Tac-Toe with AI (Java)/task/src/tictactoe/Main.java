@@ -4,7 +4,6 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        Game game;
         boolean isFinished = false;
 
         while (!isFinished) {
@@ -26,7 +25,7 @@ public class Main {
             Player player1 = Player.getPlayer(splited[1]);
             Player player2 = Player.getPlayer(splited[2]);
 
-            game = new Game(player1, player2);
+            new Game(player1, player2);
         }
     }
 }

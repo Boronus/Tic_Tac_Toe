@@ -1,28 +1,15 @@
 package tictactoe;
 
-import java.util.Scanner;
-
 public class Player {
-    public PlayerType type;
-
     public static Player getPlayer(String inputString) {
-        if (inputString.equals("user")) {
-            return new User();
-        }
+        return switch (inputString) {
+            case "user" -> new User();
+            case "easy" -> new Easy();
+            case "medium" -> new Medium();
+            case "hard" -> new Hard();
+            default -> null;
+        };
 
-        if (inputString.equals("easy")) {
-            return new Easy();
-        }
-
-        if (inputString.equals("medium")) {
-            return new Medium();
-        }
-
-        if (inputString.equals("hard")) {
-            return new Hard();
-        }
-
-        return null;
     }
 
     public void play(Matrix matrix) {}

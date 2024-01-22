@@ -1,33 +1,28 @@
 package tictactoe;
 
-import java.util.Random;
-
 public class Hard extends Player{
-    public final PlayerType type = PlayerType.HARD;
     public char currentPlayerFigure = ' ';
-    public char oponentPlayerFigure = ' ';
+    public char opponentPlayerFigure = ' ';
 
     @Override
     public void play(Matrix matrix) {
         System.out.println("Making move level \"hard\"");
 
         this.currentPlayerFigure = Player.getFigure(matrix);
-        this.oponentPlayerFigure = Player.getOpponentFigure(matrix);
+        this.opponentPlayerFigure = Player.getOpponentFigure(matrix);
 
-        this.bestMove(matrix);
+        this.calculateBestMove(matrix);
     }
 
-    public void bestMove(Matrix matrix) {
+    public void calculateBestMove(Matrix matrix) {
         int bestScore = -100;
         int bestX = 0;
         int bestY = 0;
 
         for (int i=0; i<3; i++) {
             for (int j = 0; j < 3; j++) {
-                if (matrix.matrix[i][j] == ' ') {
-                    matrix.matrix[i][j] = this.currentPlayerFigure;
-                    int score = minimax(matrix, 0, false);
-                    matrix.matrix[i][j] = ' ';
+                if (matrix.table[i][j] == ' ') {
+                    int score = getScoreForTheSquare(matrix, i, j, 0, false);
 
                     if (score > bestScore) {
                         bestScore = score;
@@ -38,10 +33,10 @@ public class Hard extends Player{
             }
         }
 
-        matrix.matrix[bestX][bestY] = this.currentPlayerFigure;
+        matrix.table[bestX][bestY] = this.currentPlayerFigure;
     }
 
-    public int getScore(State state, Matrix matrix) {
+    public int getScore(State state) {
         if (this.currentPlayerFigure == 'X' && state ==State.X_WINS || this.currentPlayerFigure == 'O' && state ==State.O_WINS) {
             return 10;
         }
@@ -53,11 +48,18 @@ public class Hard extends Player{
         return 0;
     }
 
-    public int minimax(Matrix matrix, int depth, boolean isMaximizing) {
-        State result = StateHandler.getState(matrix.matrix);
+    public int getScoreForTheSquare(Matrix matrix, int raw, int column, int depth, boolean isMaximizing) {
+        matrix.table[raw][column] = isMaximizing ? this.opponentPlayerFigure : this.currentPlayerFigure;
+        int score = calculateMiniMax(matrix, depth +1, isMaximizing);
+        matrix.table[raw][column] = ' ';
+        return score;
+    }
+
+    public int calculateMiniMax(Matrix matrix, int depth, boolean isMaximizing) {
+        State result = StateHandler.getState(matrix.table);
 
         if (result != State.NOT_FINISHED) {
-            return getScore(result, matrix);
+            return getScore(result);
         }
 
         if (isMaximizing) {
@@ -65,10 +67,8 @@ public class Hard extends Player{
 
             for (int i=0; i<3; i++) {
                 for (int j = 0; j < 3; j++) {
-                    if (matrix.matrix[i][j] == ' ') {
-                        matrix.matrix[i][j] = this.currentPlayerFigure;
-                        var score = minimax(matrix, depth +1, false);
-                        matrix.matrix[i][j] = ' ';
+                    if (matrix.table[i][j] == ' ') {
+                        int score = getScoreForTheSquare(matrix, i, j, depth, false);
 
                         if (score > bestScore) {
                             bestScore = score;
@@ -83,10 +83,8 @@ public class Hard extends Player{
 
             for (int i=0; i<3; i++) {
                 for (int j = 0; j < 3; j++) {
-                    if (matrix.matrix[i][j] == ' ') {
-                        matrix.matrix[i][j] = this.oponentPlayerFigure;
-                        var score = minimax(matrix, depth +1, true);
-                        matrix.matrix[i][j] = ' ';
+                    if (matrix.table[i][j] == ' ') {
+                        int score = getScoreForTheSquare(matrix, i, j, depth, true);
 
                         if (score < bestScore) {
                             bestScore = score;

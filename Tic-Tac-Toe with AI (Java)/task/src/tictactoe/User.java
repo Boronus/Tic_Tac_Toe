@@ -3,8 +3,6 @@ package tictactoe;
 import java.util.Scanner;
 
 public class User extends Player {
-    public final PlayerType type = PlayerType.USER;
-
     @Override
     public void play(Matrix matrix) {
         Scanner scanner = new Scanner(System.in);
@@ -38,12 +36,12 @@ public class User extends Player {
                 continue;
             }
 
-            if (matrix.matrix[coordX - 1][coordY - 1] != ' ') {
+            if (matrix.table[coordX - 1][coordY - 1] != ' ') {
                 System.out.println("This cell is occupied! Choose another one!");
                 continue;
             }
 
-            matrix.matrix[coordX - 1][coordY - 1] = Player.getFigure(matrix);
+            matrix.table[coordX - 1][coordY - 1] = Player.getFigure(matrix);
             isCorrect = true;
         }
     }

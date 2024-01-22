@@ -4,7 +4,7 @@ public class Game {
     Matrix matrix = new Matrix();
     State state = State.NOT_FINISHED;
 
-    Game(Player player1, Player player2) {
+    public Game(Player player1, Player player2) {
         matrix.showCurrentMatrix();
 
         while (state == State.NOT_FINISHED) {
@@ -30,6 +30,6 @@ public class Game {
 
     void updateState() {
         matrix.showCurrentMatrix();
-        state = StateHandler.getState(matrix.matrix);
+        state = StateHandler.getState(matrix.table);
     }
 }
